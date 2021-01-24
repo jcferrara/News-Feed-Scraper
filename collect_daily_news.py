@@ -4,9 +4,9 @@ import pandas as pd
 feeds = {
         'The Economist': "https://www.economist.com/united-states/rss.xml",
         'New York Times': "https://www.nytimes.com/svc/collections/v1/publish/https://www.nytimes.com/section/world/rss.xml",
-        #'Wall Street Journal': "https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
-        #'Reuters': "http://feeds.reuters.com/Reuters/worldNews",
-        #'City Lab': "https://www.citylab.com/feeds/posts/",
+        'Wall Street Journal': "https://feeds.a.dj.com/rss/WSJcomUSBusiness.xml",
+        'Reuters': "http://feeds.reuters.com/Reuters/worldNews",
+        'City Lab': "https://www.citylab.com/feeds/posts/",
         'TechCrunch': "http://feeds.feedburner.com/TechCrunch/startups"
         }
 
@@ -36,5 +36,5 @@ for key, value in feeds.items():
                      'id':unique_id})
     
 daily_data = pd.DataFrame(data)
-daily_data.to_csv('/Users/JustinFerrara/Desktop/2020.11.08 - daily_data.csv', index=False)
+daily_data.to_csv('daily_data.csv', index=False)
 
