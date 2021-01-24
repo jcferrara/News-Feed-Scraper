@@ -59,7 +59,3 @@ def get_daily_news(sources):
     daily_data.drop_duplicates(subset=['id'], inplace = True)
     
     return(daily_data)
-
-#daily_data.to_csv('daily_data.csv', index=False)
-    
-test = get_daily_news(sources = feeds)
