@@ -10,31 +10,56 @@ feeds = {
         'TechCrunch': "http://feeds.feedburner.com/TechCrunch/startups"
         }
 
-data = []
-
-for key, value in feeds.items():
-        
-    feed = feedparser.parse(value)
-    posts = feed["items"]
+def get_daily_news(sources):
     
-    for post in posts:
-        
-        try:
-            title = post['title']
-            published = post['published']
-            published = published[5:25]
-            summary = post['summary']
-            source = key
-            unique_id = abs(hash(post['title']))
-        except:
-            continue
-        
-        data.append({'title':title, 
-                     'published_date':published, 
-                     'summary':summary, 
-                     'source':source,
-                     'id':unique_id})
+    """
+    PARAMETERS
+    ----------
+    sources: Accepts a dictionary with rss urls as values. For example, {'The Economist': 'https://www.economist.com/united-states/rss.xml'}
     
-daily_data = pd.DataFrame(data)
-daily_data.to_csv('daily_data.csv', index=False)
+    RETURNS
+    ----------
+    data: pd.DataFrame with columns title, published_date, summary, source, id
+    
+    REQUIRES
+    ----------
+    import feedparser
+    import pandas as pd
+    
+    """
+    
+    feeds = sources
+    
+    data = []
 
+    for key, value in feeds.items():
+            
+        feed = feedparser.parse(value)
+        posts = feed["items"]
+        
+        for post in posts:
+            
+            try:
+                title = post['title']
+                published = post['published']
+                published = published[5:25]
+                summary = post['summary']
+                source = key
+                unique_id = abs(hash(post['title']))
+            except:
+                continue
+            
+            data.append({'title':title, 
+                         'published_date':published, 
+                         'summary':summary, 
+                         'source':source,
+                         'id':unique_id})
+    
+    daily_data = pd.DataFrame(data)
+    daily_data.drop_duplicates(subset=['id'], inplace = True)
+    
+    return(daily_data)
+
+#daily_data.to_csv('daily_data.csv', index=False)
+    
+test = get_daily_news(sources = feeds)
